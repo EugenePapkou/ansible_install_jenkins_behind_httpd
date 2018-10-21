@@ -1,0 +1,21 @@
+- name: get jenkins version
+  shell: /usr/bin/java -jar /opt/jenkins.war --version
+  register: jenkins_version
+  changed_when: false
+
+- name: gathering facts about jenkins
+  copy: 
+    content: >
+      {
+        "Jenkins version": "{{ jenkins_version.stdout }}",
+        "installed": "{{ ansible_date_time.iso8601 }}"
+      }
+    dest: /etc/ansible/facts.d/jenkins.fact
+  become: yes
+
+- name: enable jenkins
+  systemd:
+    name: jenkins
+    enabled: true
+
+

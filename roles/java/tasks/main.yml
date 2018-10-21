@@ -1,0 +1,9 @@
+- name: Installing openjdk
+  yum:
+    name: java-{{ jdk_release }}-openjdk
+    state: present
+  notify:
+    - Java Version
+    - Java Build
+    - save java details
+

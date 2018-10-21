@@ -1,0 +1,20 @@
+- name: Java Version
+  shell: java -version 2>&1 | grep version | awk '{print $3}' | sed 's/[^0-9._]//g'
+  register: java_version
+  changed_when: false
+
+- name: Java Build
+  shell: java -version 2>&1 | grep "Server VM .build"
+  register: java_build
+  changed_when: false
+
+- name: save java details
+  copy: 
+    content: >
+      {
+        "version": "{{ java_version.stdout }}",
+        "build": "{{ java_build.stdout }}",
+        "installed": "{{ ansible_date_time.iso8601 }}"
+      }
+    dest: /etc/ansible/facts.d/java.fact
+  become: yes

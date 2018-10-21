@@ -1,0 +1,26 @@
+- name: Adding group "{{ group }}"
+  group:
+    name: "{{ group }}"
+    state: present
+
+- name: Adding user
+  user:
+    name: "{{ user }}"
+    password: $6$5FSYq7twLrGOPHRi$qoWrHt4uDIFCmC753xsC2ysYha3JEM7OdMowK.LzWev.SbIaXmbZRxZbm./s3A6asPNOOER3aZomZtJFSvdI51
+    uid: 1120
+    group: "{{ group }}"
+  notify:
+    - get user details
+    - save user details
+
+- name: Sending pub key
+  authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: "{{ lookup('file', '/home/student/ansible/day1/{{ user }}.pub') }}"
+
+- name: Adding to sudoers
+  template:
+    src: user.j2
+    dest: /etc/sudoers.d/{{ user }}
+

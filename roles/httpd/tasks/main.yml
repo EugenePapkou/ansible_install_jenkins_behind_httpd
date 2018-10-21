@@ -1,0 +1,25 @@
+- name: install the httpd server
+  yum: 
+    name: httpd
+    state: latest
+  notify:
+    - get httpd version
+    - get httpd built
+    - save httpd details
+
+- name: start the httpd service
+  service: name=httpd state=started
+
+- name: configuring httpd
+  template:
+    src: httpd-vhosts.j2
+    dest: /etc/httpd/conf.d/httpd-vhost.conf
+  notify:
+  - restart httpd
+
+- name: Open port 80
+  firewalld: service=http permanent=true state=enabled
+  notify:
+  - restart the firewalld service
+
+
