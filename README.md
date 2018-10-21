@@ -18,5 +18,5 @@ List of roles:
 4. **jenkins** - installs Jenkins, creates user jenkins:jenkins, configures systemd to start Jenkins, starts Jenkins and prints the init password to console.
 5. **httpd** - installs httpd service, configures httpd to forward requests to Jenkins (using VirtualHost config).
 
-All roles gather facts about configured software on the system.
+All roles gather facts about configured software on the system.  
 Handlers, templates and default variables are used.
