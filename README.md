@@ -19,4 +19,5 @@ List of roles:
 5. **httpd** - installs httpd service, configures httpd to forward requests to Jenkins (using VirtualHost config).
 
 All roles gather facts about configured software on the system.  
+  
 Handlers, templates and default variables are used.
